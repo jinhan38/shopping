@@ -24,7 +24,7 @@ class _NavigationScreenState extends State<NavigationScreen> {
       valueListenable: _currentIndex,
       builder: (context, value, child) {
         return Scaffold(
-          body: _pages[value],
+          body: SafeArea(child: _pages[value]),
           bottomNavigationBar: BottomNavigationBar(
             onTap: (index) => _currentIndex.value = index,
             showSelectedLabels: false,
@@ -47,7 +47,7 @@ class _NavigationScreenState extends State<NavigationScreen> {
   }
 
   final List<Widget> _pages = [
-    Home(),
+     Home(),
     Container(color: Colors.red),
     Container(color: Colors.purple),
   ];

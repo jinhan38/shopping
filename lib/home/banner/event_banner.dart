@@ -38,24 +38,27 @@ class _EventBannerState extends State<EventBanner> {
       height: height,
       child: Stack(
         children: [
-          PageView(
-            onPageChanged: (index) => _currentIndex.value = index,
-            physics: physics.COMMON_PHYSICS,
-            children: List.generate(itemCount, (index) => itemBuilder(index)),
-          ),
-          Positioned(
-            right: 10,
-            bottom: 10,
-            child: ValueListenableBuilder(
-              valueListenable: _currentIndex,
-              builder: (context, value, child) {
-                return BannerIndicator(
-                    currentIndex: value + 1, length: itemCount);
-              },
-            ),
-          ),
+          _imagePageView(),
+          _bannerIndicator(),
         ],
       ),
     );
   }
+
+  Widget _imagePageView() => PageView(
+        onPageChanged: (index) => _currentIndex.value = index,
+        physics: physics.COMMON_PHYSICS,
+        children: List.generate(itemCount, (index) => itemBuilder(index)),
+      );
+
+  Widget _bannerIndicator() => Positioned(
+        right: 10,
+        bottom: 10,
+        child: ValueListenableBuilder(
+          valueListenable: _currentIndex,
+          builder: (context, value, child) {
+            return BannerIndicator(currentIndex: value + 1, length: itemCount);
+          },
+        ),
+      );
 }
