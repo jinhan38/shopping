@@ -24,6 +24,7 @@ class _NavigationScreenState extends State<NavigationScreen> {
       valueListenable: _currentIndex,
       builder: (context, value, child) {
         return Scaffold(
+          backgroundColor: Colors.white,
           body: SafeArea(child: _pages[value]),
           bottomNavigationBar: BottomNavigationBar(
             onTap: (index) => _currentIndex.value = index,

@@ -5,9 +5,11 @@ import 'package:shopping/model/base_model.dart';
 
 class ShortCut extends StatefulWidget {
   List<BaseModel> shortCutData;
+  Function(int id) onTap;
 
   ShortCut({
     required this.shortCutData,
+    required this.onTap,
     Key? key,
   }) : super(key: key);
 
@@ -18,6 +20,8 @@ class ShortCut extends StatefulWidget {
 class _ShortCutState extends State<ShortCut> {
   List<BaseModel> get shortCutData => widget.shortCutData;
 
+  Function(int id) get onTap => widget.onTap;
+
   final ValueNotifier<double> _scaling = ValueNotifier<double>(0);
 
   @override
@@ -25,6 +29,7 @@ class _ShortCutState extends State<ShortCut> {
     return Column(
       children: [
         _shortCutScrollView(),
+        const SizedBox(height: 4),
         _shortCutIndicator(),
       ],
     );
@@ -36,6 +41,7 @@ class _ShortCutState extends State<ShortCut> {
       scrollOffset: (offset, maxExtent) {
         _scaling.value = offset / maxExtent;
       },
+      onTap: onTap,
     );
   }
 

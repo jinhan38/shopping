@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:shopping/util/physics.dart';
+import 'package:shopping/res/physics.dart';
 
 import 'banner_indicator.dart';
 
@@ -29,6 +29,20 @@ class _EventBannerState extends State<EventBanner> {
 
   final ValueNotifier<int> _currentIndex = ValueNotifier<int>(0);
 
+  late PageController _pageController;
+
+  @override
+  void initState() {
+    _pageController = PageController(initialPage: itemCount * 50);
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _pageController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     if (itemCount == 0) {
@@ -46,9 +60,11 @@ class _EventBannerState extends State<EventBanner> {
   }
 
   Widget _imagePageView() => PageView(
-        onPageChanged: (index) => _currentIndex.value = index,
+        controller: _pageController,
+        onPageChanged: (index) => _currentIndex.value = index % itemCount,
         physics: physics.COMMON_PHYSICS,
-        children: List.generate(itemCount, (index) => itemBuilder(index)),
+        children: List.generate(
+            itemCount * 100, (index) => itemBuilder(index % itemCount)),
       );
 
   Widget _bannerIndicator() => Positioned(
